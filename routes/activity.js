@@ -6,7 +6,6 @@ const Path = require('path');
 const JWT = require(Path.join(__dirname, '..', 'lib', 'jwtDecoder.js'));
 var util = require('util');
 var http = require('https');
-var axios = require('axios');
 
 exports.logExecuteData = [];
 
@@ -164,7 +163,8 @@ exports.execute = function (req, res) {
 
           console.log ('edk: ' + edk);
 
-          if (edk != undefined) {            
+          if (edk != undefined) {
+            var axios = require('axios');
             var data = JSON.stringify(contentJSON);
             
             var config = {
