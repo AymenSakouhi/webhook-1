@@ -8,7 +8,7 @@
     "type": "REST",
     "lang": {
         "en-US": {
-            "name": "DEV Webhook Activity",
+            "name": "Webhook 2.0",
           "description": "CP Webhook",
           "step1Label": "Configure Webhook"
         }
