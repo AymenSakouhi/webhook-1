@@ -173,7 +173,7 @@ define(["postmonger"], function (Postmonger) {
       entryObject = "DE";
     }
 
-    console.log(InteractionDefaults.Email);
+    //console.log(InteractionDefaults.Email);
 
     //switch (selectEntryObject) {
     //   case "Opportunity":
