@@ -140,7 +140,7 @@ define(["postmonger"], function (Postmonger) {
     var postcardURLValue = $("#postcard-url").val();
     var postcardTextValue = $("#postcard-text").val();
 
-    var name = "DEV Webhook Settings";
+    var name = "Webhook 2.0";
     var url = getURL();
     var contentJSON = getcontentJSON();
     var domain = getDomain();
@@ -173,121 +173,102 @@ define(["postmonger"], function (Postmonger) {
       entryObject = "DE";
     }
 
-    switch (selectEntryObject) {
-      case "Opportunity":
-        firstName = "Opportunity:Account:FirstName";
-        lastName = "Opportunity:Account:LastName";
-        accountId = "Opportunity:Account:Id";
-        opportunityId = "Opportunity:Id";
-        stageName = "Opportunity:StageName";
-        programFamily = "Opportunity:ProgramFamily__c";
-        cpAccountId = "Opportunity:Account:CP_Account_ID__c";
-        salutation = "Opportunity:Account:Salutation";
-        productName =
-          "Opportunity:CourseOfStudyLookup__r:Product_Display_Name__c";
-        productFamily = "Opportunity:CourseOfStudyLookup__r:Family";
-        productId = "Opportunity:CourseOfStudyLookup__r:Id";
-        degree = "Opportunity:DegreeName__c";
-        createdDate = "Opportunity:CreatedDate";
-        optIn = "Opportunity:Account:OptInEmail__c";
-        country = "Opportunity:Account:ShippingCountry";
-        voucher = "Opportunity:VoucherID__c";
-        workExperience = "Opportunity:WorkExperience__c";
-        budget = "Opportunity:BudgetPerMonth__c";
-        rate = "Opportunity:RatePerInterval__c";
-        studyAdvisor = "Opportunity:StudyAdvisor__c";
-        phone = "Opportunity:Account:Phone";
-        obwKey = "Opportunity:ObwUserKey__c";
-        break;
-      case "OpportunityArchive__c":
-        firstName = "OpportunityArchive__c:Account__r:FirstName";
-        lastName = "OpportunityArchive__c:Account__r:LastName";
-        accountId = "OpportunityArchive__c:Account__r:Id";
-        opportunityId = "OpportunityArchive__c:Opportunity__r:Id";
-        stageName = "OpportunityArchive__c:StageName__c";
-        programFamily = "OpportunityArchive__c:Program_Family__c";
-        salutation = "OpportunityArchive__c:Account__r:Salutation";
-        productName =
-          "OpportunityArchive__c:CourseOfStudy__r:Product_Display_Name__c";
-        productFamily = "OpportunityArchive__c:CourseOfStudy__r:Family";
-        productId = "OpportunityArchive__c:CourseOfStudy__r:Id";
-        degree = "OpportunityArchive__c:degree__c";
-        optIn = "OpportunityArchive__c:Account__r:OptInEmail__c";
-        country = "OpportunityArchive__c:Account__r:ShippingCountry";
-        voucher = "OpportunityArchive__c:VoucherID__c";
-        workExperience = "OpportunityArchive__c:WorkExperience__c";
-        budget = "OpportunityArchive__c:BudgetPerMonth__c";
-        rate = "OpportunityArchive__c:RatePerInterval__c";
-        phone = "OpportunityArchive__c:Account__r:Phone";
-        obwKey = "OpportunityArchive__c:ObwUserKey__c";
-        break;
-      case "DE":
-        firstName = "First Name";
-        lastName = "Last Name";
-        accountId = "Account ID";
-        opportunityId = "Opportunity ID";
-        stageName = "Stage";
-        programFamily = "Program Family";
-        cpAccountId = "CP Account ID";
-        salutation = "Opportunity:Account:Salutation";
-        productName = "Course Of Study Lookup: Product Display Name";
-        productFamily = "Opportunity:CourseOfStudyLookup__r:Family";
-        productId = "Opportunity:CourseOfStudyLookup__r:Id";
-        degree = "Degree_old";
-        createdDate = "Created Date";
-        optIn = "Opt-In Email";
-        country = "Country";
-        voucher = "Voucher ID";
-        workExperience = "Opportunity:WorkExperience__c";
-        budget = "Opportunity:BudgetPerMonth__c";
-        rate = "Opportunity:RatePerInterval__c";
-        studyAdvisor = "Study Advisor: Full Name";
-        phone = "Phone 1";
-        obwKey = "ObwUserKey";
-        break;
-      default:
-        /*firstName = 'Opportunity:Account:FirstName';
-            lastName = 'Opportunity:Account:LastName';
-            accountId = 'Opportunity:Account:Id';
-            opportunityId = 'Opportunity:Id';
-            stageName = 'Opportunity:StageName';
-            programFamily = 'Opportunity:ProgramFamily__c';
-            cpAccountId = 'Opportunity:Account:CP_Account_ID__c';
-            salutation = 'Opportunity:Account:Salutation';
-            productName = 'Opportunity:CourseOfStudyLookup__r:Product_Display_Name__c';
-            productFamily = 'Opportunity:CourseOfStudyLookup__r:Family';
-            productId = 'Opportunity:CourseOfStudyLookup__r:Id';
-            degree = 'Opportunity:DegreeName__c';
-            createdDate = 'Opportunity:CreatedDate';
-            optIn = 'Opportunity:Account:OptInEmail__c';
-            country = 'Opportunity:Account:ShippingCountry';
-            voucher = 'Opportunity:VoucherID__c';
-            workExperience = 'Opportunity:WorkExperience__c';
-            budget = 'Opportunity:BudgetPerMonth__c';
-            rate = 'Opportunity:RatePerInterval__c';
-            studyAdvisor = 'Opportunity:StudyAdvisor__c';
-            phone = 'Opportunity:Account:Phone';*/
-        firstName = "OpportunityArchive__c:Account__r:FirstName";
-        lastName = "OpportunityArchive__c:Account__r:LastName";
-        accountId = "OpportunityArchive__c:Account__r:Id";
-        opportunityId = "OpportunityArchive__c:Opportunity__r:Id";
-        stageName = "OpportunityArchive__c:StageName__c";
-        programFamily = "OpportunityArchive__c:Program_Family__c";
-        salutation = "OpportunityArchive__c:Account__r:Salutation";
-        productName =
-          "OpportunityArchive__c:CourseOfStudy__r:Product_Display_Name__c";
-        productFamily = "OpportunityArchive__c:CourseOfStudy__r:Family";
-        productId = "OpportunityArchive__c:CourseOfStudy__r:Id";
-        degree = "OpportunityArchive__c:degree__c";
-        optIn = "OpportunityArchive__c:Account__r:OptInEmail__c";
-        country = "OpportunityArchive__c:Account__r:ShippingCountry";
-        voucher = "OpportunityArchive__c:VoucherID__c";
-        workExperience = "OpportunityArchive__c:WorkExperience__c";
-        budget = "OpportunityArchive__c:BudgetPerMonth__c";
-        rate = "OpportunityArchive__c:RatePerInterval__c";
-        phone = "OpportunityArchive__c:Account__r:Phone";
-        obwKey = "OpportunityArchive__c:ObwUserKey__c";
-    }
+    console.log(InteractionDefaults.Email);
+
+    //switch (selectEntryObject) {
+    //   case "Opportunity":
+    //     firstName = "Opportunity:Account:FirstName";
+    //     lastName = "Opportunity:Account:LastName";
+    //     accountId = "Opportunity:Account:Id";
+    //     opportunityId = "Opportunity:Id";
+    //     stageName = "Opportunity:StageName";
+    //     programFamily = "Opportunity:ProgramFamily__c";
+    //     cpAccountId = "Opportunity:Account:CP_Account_ID__c";
+    //     salutation = "Opportunity:Account:Salutation";
+    //     productName =
+    //       "Opportunity:CourseOfStudyLookup__r:Product_Display_Name__c";
+    //     productFamily = "Opportunity:CourseOfStudyLookup__r:Family";
+    //     productId = "Opportunity:CourseOfStudyLookup__r:Id";
+    //     degree = "Opportunity:DegreeName__c";
+    //     createdDate = "Opportunity:CreatedDate";
+    //     optIn = "Opportunity:Account:OptInEmail__c";
+    //     country = "Opportunity:Account:ShippingCountry";
+    //     voucher = "Opportunity:VoucherID__c";
+    //     workExperience = "Opportunity:WorkExperience__c";
+    //     budget = "Opportunity:BudgetPerMonth__c";
+    //     rate = "Opportunity:RatePerInterval__c";
+    //     studyAdvisor = "Opportunity:StudyAdvisor__c";
+    //     phone = "Opportunity:Account:Phone";
+    //     obwKey = "Opportunity:ObwUserKey__c";
+    //     break;
+    //   case "OpportunityArchive__c":
+    //     firstName = "OpportunityArchive__c:Account__r:FirstName";
+    //     lastName = "OpportunityArchive__c:Account__r:LastName";
+    //     accountId = "OpportunityArchive__c:Account__r:Id";
+    //     opportunityId = "OpportunityArchive__c:Opportunity__r:Id";
+    //     stageName = "OpportunityArchive__c:StageName__c";
+    //     programFamily = "OpportunityArchive__c:Program_Family__c";
+    //     salutation = "OpportunityArchive__c:Account__r:Salutation";
+    //     productName =
+    //       "OpportunityArchive__c:CourseOfStudy__r:Product_Display_Name__c";
+    //     productFamily = "OpportunityArchive__c:CourseOfStudy__r:Family";
+    //     productId = "OpportunityArchive__c:CourseOfStudy__r:Id";
+    //     degree = "OpportunityArchive__c:degree__c";
+    //     optIn = "OpportunityArchive__c:Account__r:OptInEmail__c";
+    //     country = "OpportunityArchive__c:Account__r:ShippingCountry";
+    //     voucher = "OpportunityArchive__c:VoucherID__c";
+    //     workExperience = "OpportunityArchive__c:WorkExperience__c";
+    //     budget = "OpportunityArchive__c:BudgetPerMonth__c";
+    //     rate = "OpportunityArchive__c:RatePerInterval__c";
+    //     phone = "OpportunityArchive__c:Account__r:Phone";
+    //     obwKey = "OpportunityArchive__c:ObwUserKey__c";
+    //     break;
+    //case "DE":
+    firstName = "firstName";
+    lastName = "lastName";
+    accountId = "Account ID";
+    opportunityId = "Opportunity ID";
+    stageName = "Stage";
+    programFamily = "Program Family";
+    cpAccountId = "CP Account ID";
+    salutation = "Opportunity:Account:Salutation";
+    productName = "Course Of Study Lookup: Product Display Name";
+    productFamily = "Opportunity:CourseOfStudyLookup__r:Family";
+    productId = "Opportunity:CourseOfStudyLookup__r:Id";
+    degree = "Degree_old";
+    createdDate = "Created Date";
+    optIn = "email";
+    country = "Country";
+    voucher = "Voucher ID";
+    workExperience = "Opportunity:WorkExperience__c";
+    budget = "Opportunity:BudgetPerMonth__c";
+    rate = "Opportunity:RatePerInterval__c";
+    studyAdvisor = "Study Advisor: Full Name";
+    phone = "Phone 1";
+    obwKey = "ObwUserKey";
+    //     break;
+    //   default:
+    //     firstName = "OpportunityArchive__c:Account__r:FirstName";
+    //     lastName = "OpportunityArchive__c:Account__r:LastName";
+    //     accountId = "OpportunityArchive__c:Account__r:Id";
+    //     opportunityId = "OpportunityArchive__c:Opportunity__r:Id";
+    //     stageName = "OpportunityArchive__c:StageName__c";
+    //     programFamily = "OpportunityArchive__c:Program_Family__c";
+    //     salutation = "OpportunityArchive__c:Account__r:Salutation";
+    //     productName =
+    //       "OpportunityArchive__c:CourseOfStudy__r:Product_Display_Name__c";
+    //     productFamily = "OpportunityArchive__c:CourseOfStudy__r:Family";
+    //     productId = "OpportunityArchive__c:CourseOfStudy__r:Id";
+    //     degree = "OpportunityArchive__c:degree__c";
+    //     optIn = "OpportunityArchive__c:Account__r:OptInEmail__c";
+    //     country = "OpportunityArchive__c:Account__r:ShippingCountry";
+    //     voucher = "OpportunityArchive__c:VoucherID__c";
+    //     workExperience = "OpportunityArchive__c:WorkExperience__c";
+    //     budget = "OpportunityArchive__c:BudgetPerMonth__c";
+    //     rate = "OpportunityArchive__c:RatePerInterval__c";
+    //     phone = "OpportunityArchive__c:Account__r:Phone";
+    //     obwKey = "OpportunityArchive__c:ObwUserKey__c";
+    //}
     payload.name = name;
 
     payload["arguments"].execute.inArguments = [
