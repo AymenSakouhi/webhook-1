@@ -17,7 +17,7 @@
         "execute": {
            "inArguments":[],
            "outArguments": [],
-           "url": "https://shjbactivity.herokuapp.com/journeybuilder/execute",
+           "url": "https://sfmc-cat-002.herokuapp.com/journeybuilder/execute",
            "verb": "POST",
             "body": "",
             "header": "",
@@ -29,22 +29,22 @@
     },
     "configurationArguments": {
       "save": {
-        "url": "https://shjbactivity.herokuapp.com/journeybuilder/save",
+        "url": "https://sfmc-cat-002.herokuapp.com/journeybuilder/save",
           "verb": "POST",
         "useJwt": true
        },
        "publish": {
-        "url": "https://shjbactivity.herokuapp.com/journeybuilder/publish",
+        "url": "https://sfmc-cat-002.herokuapp.com/journeybuilder/publish",
            "verb": "POST",
         "useJwt": true
        },
       "stop": {
-        "url": "https://shjbactivity.herokuapp.com/journeybuilder/stop",
+        "url": "https://sfmc-cat-002.herokuapp.com/journeybuilder/stop",
            "verb": "POST",
         "useJwt": true
       },
       "validate": {
-        "url": "https://shjbactivity.herokuapp.com/journeybuilder/validate",
+        "url": "https://sfmc-cat-002.herokuapp.com/journeybuilder/validate",
         "verb": "POST",
         "useJwt": true
       }
