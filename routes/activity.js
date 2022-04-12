@@ -66,7 +66,7 @@ exports.save = function (req, res) {
     //console.log( req.body );
     //console.log( 'TEST SAVE' );
 
-    //logData(req);
+    logData(req);
     res.send(200, 'Save');
 };
 

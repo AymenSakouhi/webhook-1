@@ -5,7 +5,7 @@ define(["postmonger"], function (Postmonger) {
   var authTokens = {};
   var payload = {};
   var eventDefinitionKey;
-  //var entryObject;
+  var entryObject;
   var journeyName;
   var entryTitle;
 
@@ -22,13 +22,11 @@ define(["postmonger"], function (Postmonger) {
     onRequestedTriggerEventDefinition
   );
   connection.on("requestedDataSources", onRequestedDataSources);
-
   connection.on("clickedNext", save);
 
   function onRender() {
     // JB will respond the first time 'ready' is called with 'initActivity'
     connection.trigger("ready");
-
     connection.trigger("requestTokens");
     connection.trigger("requestEndpoints");
     connection.trigger("requestInteraction");
@@ -47,9 +45,9 @@ define(["postmonger"], function (Postmonger) {
       var contentJSON = getcontentJSON();
     });
 
-    // $("#entryObject").change(function () {
-    //   var selectEntryObject = getEntryObject();
-    // });
+    $("#entryObject").change(function () {
+      var selectEntryObject = getEntryObject();
+    });
   }
 
   function onRequestedDataSources(dataSources) {
@@ -60,12 +58,12 @@ define(["postmonger"], function (Postmonger) {
   function onRequestedInteraction(interaction) {
     console.log("*** requestedInteraction ***");
     eventDefinitionKey = interaction.triggers[0].metaData.eventDefinitionKey;
-    //entryObject = interaction.triggers[0].configurationArguments.objectAPIName;
+    entryObject = interaction.triggers[0].configurationArguments.objectAPIName;
     entryTitle = interaction.triggers[0].metaData.title;
     journeyName = interaction.name;
     console.log(JSON.stringify(interaction));
     console.log("EDK: " + eventDefinitionKey);
-    //console.log("EO: " + entryObject);
+    console.log("EO: " + entryObject);
     console.log("ET: " + entryTitle);
   }
 
@@ -112,16 +110,16 @@ define(["postmonger"], function (Postmonger) {
         if (key === "domain") {
           domain = val;
         }
-        // if (key === "selectEntryObject") {
-        //   selectEntryObject = val;
-        // }
+        if (key === "selectEntryObject") {
+          selectEntryObject = val;
+        }
       });
     });
 
     $("#url").val(url);
     $("#payload").val(contentJSON);
     $("#domain").val(domain);
-    // $("#entryObject").val(selectEntryObject);
+    $("#entryObject").val(selectEntryObject);
     connection.trigger("updateButton", {
       button: "next",
       text: "done",
@@ -146,7 +144,7 @@ define(["postmonger"], function (Postmonger) {
     var url = getURL();
     var contentJSON = getcontentJSON();
     var domain = getDomain();
-    //var selectEntryObject = getEntryObject();
+    var selectEntryObject = getEntryObject();
     var preObject;
     var firstName;
     var lastName;
@@ -171,9 +169,9 @@ define(["postmonger"], function (Postmonger) {
     var phone;
     var obwKey;
 
-    // if (entryTitle == "Data Extension") {
-    //   entryObject = "DE";
-    // }
+    if (entryTitle == "Data Extension") {
+      entryObject = "DE";
+    }
 
     switch (selectEntryObject) {
       case "Opportunity":
@@ -305,9 +303,9 @@ define(["postmonger"], function (Postmonger) {
       {
         emailAddress: "{{InteractionDefaults.Email}}",
       },
-    //   {
-    //     EntryObject: entryObject,
-    //   },
+      {
+        EntryObject: entryObject,
+      },
       {
         firstName: "{{Event." + eventDefinitionKey + '."' + firstName + '"}}',
       },
@@ -388,8 +386,8 @@ define(["postmonger"], function (Postmonger) {
     return $("#payload").val().trim();
   }
 
-//   function getEntryObject() {
-//     console.log("EntryObject: " + $("#entryObject").val());
-//     return $("#entryObject").val().trim();
-//   }
+  function getEntryObject() {
+    console.log("EntryObject: " + $("#entryObject").val());
+    return $("#entryObject").val().trim();
+  }
 });
