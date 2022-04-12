@@ -160,7 +160,7 @@ exports.execute = function (req, res) {
         var axios = require("axios");
 
         // handle ssl
-        const agent = new https.Agent({
+        const agent = new http.Agent({
           rejectUnauthorized: false,
         });
 
