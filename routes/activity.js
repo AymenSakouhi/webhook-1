@@ -155,9 +155,7 @@ exports.execute = function (req, res) {
           var obwKey = decoded.inArguments[31].obwKey;
           contentJSON = contentJSON.replace(/@obwKey/g, obwKey);
           
-
-
-          //console.log('outPayload: ', contentJSON);
+          console.log('outPayload: ', contentJSON);
 
           /* Webhook API Call */
 
@@ -189,7 +187,7 @@ exports.execute = function (req, res) {
 
             zapOptions['path'] = webhookURL;
             zapOptions['hostname'] = domain;
-            //console.log('Webhook Options: ', zapOptions)
+            console.log('Webhook Options: ', zapOptions)
 
             const zapReq = zapHttps.request(zapOptions, resp => {
               console.log(`EXECUTE Zapier Status: ${resp.statusCode}`)
@@ -204,7 +202,7 @@ exports.execute = function (req, res) {
                 // console.log('attempt: ', zapJSONresp.attempt);
                 // console.log('status: ', zapJSONresp.status);
                 zapResponse = JSON.stringify(zapJSONresp);
-                //console.log('zapResponse: ', zapResponse);
+                console.log('zapResponse: ', zapResponse);
 
                 // /* MC Auth Call */
 
@@ -212,12 +210,12 @@ exports.execute = function (req, res) {
 
                 const mcAuthHttps = require('https')
 
-                const authPayload = '{"grant_type": "client_credentials","client_id": "5t02s8dmqrx39d98sbuvy8e8","client_secret": "tDkBpuJkty7JDiQSZyWhCumi", "scope": "data_extensions_read data_extensions_write"}';
+                const authPayload = '{"grant_type": "client_credentials","client_id": "mi45gxnths5ja705yl7oh80w","client_secret": "iRH2Qc0c921ZIr9v3EWVp4g3", "scope": "data_extensions_read data_extensions_write"}';
                 //console.log('auth payload: ', authPayload);
                 const mcAuthData = authPayload; //JSON.stringify(payload);
 
                 const mcAuthOptions = {
-                  hostname: 'mcwprj3n0rthz83-y9-d9kx0yrw8.auth.marketingcloudapis.com',
+                  hostname: 'mcbxz8t2pj0bs3wsw5v7sczpfd2m.auth.marketingcloudapis.com',
                   port: 443,
                   path: '/v2/token/',
                   method: 'POST',
@@ -282,7 +280,7 @@ exports.execute = function (req, res) {
                     const mcLogData = JSON.stringify(logPayload);
 
                     const mcLogOptions = {
-                      hostname: 'mcwprj3n0rthz83-y9-d9kx0yrw8.rest.marketingcloudapis.com',
+                      hostname: 'mcbxz8t2pj0bs3wsw5v7sczpfd2m.rest.marketingcloudapis.com',
                       port: 443,
                       path: '/hub/v1/dataevents/key:whLog/rowset',
                       method: 'POST',
@@ -342,12 +340,12 @@ exports.execute = function (req, res) {
 
               const mcAuthHttps = require('https')
 
-              const authPayload = '{"grant_type": "client_credentials","client_id": "5t02s8dmqrx39d98sbuvy8e8","client_secret": "tDkBpuJkty7JDiQSZyWhCumi", "scope": "data_extensions_read data_extensions_write"}';
+              const authPayload = '{"grant_type": "client_credentials","client_id": "mi45gxnths5ja705yl7oh80w","client_secret": "iRH2Qc0c921ZIr9v3EWVp4g3", "scope": "data_extensions_read data_extensions_write"}';
               //console.log('auth payload: ', authPayload);
               const mcAuthData = authPayload; //JSON.stringify(payload);
 
               const mcAuthOptions = {
-                hostname: 'mcwprj3n0rthz83-y9-d9kx0yrw8.auth.marketingcloudapis.com',
+                hostname: 'mcbxz8t2pj0bs3wsw5v7sczpfd2m.auth.marketingcloudapis.com',
                 port: 443,
                 path: '/v2/token/',
                 method: 'POST',
@@ -410,7 +408,7 @@ exports.execute = function (req, res) {
                   const mcLogData = JSON.stringify(logPayload);
 
                   const mcLogOptions = {
-                    hostname: 'mcwprj3n0rthz83-y9-d9kx0yrw8.rest.marketingcloudapis.com',
+                    hostname: 'mcbxz8t2pj0bs3wsw5v7sczpfd2m.rest.marketingcloudapis.com',
                     port: 443,
                     path: '/hub/v1/dataevents/key:whLog/rowset',
                     method: 'POST',
