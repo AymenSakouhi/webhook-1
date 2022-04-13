@@ -70,57 +70,74 @@ exports.execute = function (req, res) {
       var contentJSON = decoded.inArguments[2].contentJSON;
       var email = decoded.inArguments[3].emailAddress;
       contentJSON = contentJSON.replace(/@email/g, email);
-
-
-      var firstName = decoded.inArguments[5].firstName;
+      //4:EntryObject
+      var personContactId = decoded.inArguments[5].personContactId;
+      contentJSON = contentJSON.replace(/@personContactId/g, personContactId);
+      var firstName = decoded.inArguments[6].firstName;
       contentJSON = contentJSON.replace(/@firstName/g, firstName);
-      var phone = decoded.inArguments[6].phone;
-      contentJSON = contentJSON.replace(/@phone/g, phone);
       var lastName = decoded.inArguments[7].lastName;
       contentJSON = contentJSON.replace(/@lastName/g, lastName);
       var opportunityId = decoded.inArguments[8].opportunityId;
       contentJSON = contentJSON.replace(/@opportunityId/g, opportunityId);
       var stageName = decoded.inArguments[9].stageName;
       contentJSON = contentJSON.replace(/@stageName/g, stageName);
-      var programFamily = decoded.inArguments[10].programFamily;
+      var courseOfStudyLookup = decoded.inArguments[10].courseOfStudyLookup;
+      contentJSON = contentJSON.replace(/@courseOfStudyLookup/g, courseOfStudyLookup);
+      var isPrimary = decoded.inArguments[11].isPrimary;
+      contentJSON = contentJSON.replace(/@isPrimary/g, isPrimary);
+      var programFamily = decoded.inArguments[12].programFamily;
       contentJSON = contentJSON.replace(/@programFamily/g, programFamily);
-      var cpAccountId = decoded.inArguments[11].cpAccountId;
+      var cpAccountId = decoded.inArguments[13].cpAccountId;
       contentJSON = contentJSON.replace(/@cpAccountId/g, cpAccountId);
-      var salutation = decoded.inArguments[12].salutation;
+      var salutation = decoded.inArguments[14].salutation;
       contentJSON = contentJSON.replace(/@salutation/g, salutation);
-      var productName = decoded.inArguments[13].productName;
+      var productName = decoded.inArguments[15].productName;
       contentJSON = contentJSON.replace(/@productName/g, productName);
-      var productFamily = decoded.inArguments[14].productFamily;
+      var productFamily = decoded.inArguments[16].productFamily;
       contentJSON = contentJSON.replace(/@productFamily/g, productFamily);
-      var productId = decoded.inArguments[15].productId;
+      var productId = decoded.inArguments[17].productId;
       contentJSON = contentJSON.replace(/@productId/g, productId);
-      var degree = decoded.inArguments[16].degree;
+      var degree = decoded.inArguments[18].degree;
       contentJSON = contentJSON.replace(/@degree/g, degree);
-      var createdDate = decoded.inArguments[17].createdDate;
+      var createdDate = decoded.inArguments[19].createdDate;
       contentJSON = contentJSON.replace(/@createdDate/g, createdDate);
-      var optIn = decoded.inArguments[18].optIn;
+      var optIn = decoded.inArguments[20].optIn;
       contentJSON = contentJSON.replace(/@optIn/g, optIn);
-      var country = decoded.inArguments[19].country;
+      var personEmail = decoded.inArguments[21].personEmail;
+      contentJSON = contentJSON.replace(/@personEmail/g, personEmail);
+      var country = decoded.inArguments[22].country;
       contentJSON = contentJSON.replace(/@country/g, country);
-      var voucher = decoded.inArguments[20].voucher;
+      var voucher = decoded.inArguments[23].voucher;
       contentJSON = contentJSON.replace(/@voucher/g, voucher);
-      var workExperience = decoded.inArguments[21].workExperience;
+      var englishLevel = decoded.inArguments[24].englishLevel;
+      contentJSON = contentJSON.replace(/@englishLevel/g, englishLevel);
+      var workExperience = decoded.inArguments[25].workExperience;
       contentJSON = contentJSON.replace(/@workExperience/g, workExperience);
-      var budget = decoded.inArguments[22].budget;
+      var budget = decoded.inArguments[26].budget;
       contentJSON = contentJSON.replace(/@budget/g, budget);
-      var rate = decoded.inArguments[23].rate;
+      var rate = decoded.inArguments[27].rate;
       contentJSON = contentJSON.replace(/@rate/g, rate);
-      var studyAdvisor = decoded.inArguments[24].studyAdvisor;
+      var studyAdvisor = decoded.inArguments[28].studyAdvisor;
       contentJSON = contentJSON.replace(/@studyAdvisor/g, studyAdvisor);
-      var contactId = decoded.inArguments[25].contactId;
+      var phone = decoded.inArguments[29].phone;
+      contentJSON = contentJSON.replace(/@phone/g, phone);
+      var migrationUser = decoded.inArguments[30].migrationUser;
+      contentJSON = contentJSON.replace(/@migrationUser/g, migrationUser);
+      var migrationUserId = decoded.inArguments[31].migrationUserId;
+      contentJSON = contentJSON.replace(/@migrationUserId/g, migrationUserId);
+      var contactId = decoded.inArguments[32].contactId;
       contentJSON = contentJSON.replace(/@contactId/g, contactId);
-      var domain = decoded.inArguments[26].domain;
-      var journeyName = decoded.inArguments[27].journeyName;
-      var obwKey = decoded.inArguments[31].obwKey;
+      var domain = decoded.inArguments[33].domain;
+      contentJSON = contentJSON.replace(/@domain/g, domain);
+      var journeyName = decoded.inArguments[34].journeyName;
+      contentJSON = contentJSON.replace(/@journeyName/g, journeyName);
+      var dataExtensionName = decoded.inArguments[35].edk;
+      contentJSON = contentJSON.replace(/@dataExtensionName/g, dataExtensionName);
+
+      var obwKey = decoded.inArguments[38].obwKey;
       contentJSON = contentJSON.replace(/@obwKey/g, obwKey);
 
-      var dataExtensionName = decoded.inArguments[28].edk;
-      console.log("dataExtensionName: " + dataExtensionName);
+      console.log(contentJSON)
 
       /* Webhook API Call */
       var axios = require("axios");
@@ -129,7 +146,7 @@ exports.execute = function (req, res) {
       const agent = new http.Agent({
         rejectUnauthorized: false,
       });
-      
+
       var data = JSON.stringify(contentJSON);
       var config = {
         method: "post",
