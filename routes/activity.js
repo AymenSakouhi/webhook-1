@@ -60,11 +60,10 @@ exports.execute = function (req, res) {
     }
 
     if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-      console.log("decoded in arguments: ", decoded.inArguments.length);
-
-      for (var i = 0; i < decoded.inArguments.length; i++) {
-        console.log("arg ", i, ":", decoded.inArguments[i]);
-      }
+      //console.log("decoded in arguments: ", decoded.inArguments.length);
+      // for (var i = 0; i < decoded.inArguments.length; i++) {
+      //   console.log("arg ", i, ":", decoded.inArguments[i]);
+      // }
 
       var webhookURL = decoded.inArguments[1].url;
       var contentJSON = decoded.inArguments[2].contentJSON;
@@ -158,10 +157,11 @@ exports.execute = function (req, res) {
         data: data,
       };
 
-      console.log(config.url);
+      console.log(`Execute Axios Rest call to Url=${config.url}`);
 
       axios(config)
         .then(function (response) {
+          console.info(`Axios call resultStatus`);
           console.info(JSON.stringify(response.data));
         })
         .catch(function (error) {
