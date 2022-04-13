@@ -6,12 +6,6 @@ const Path = require("path");
 const JWT = require(Path.join(__dirname, "..", "lib", "jwtDecoder.js"));
 var util = require("util");
 var http = require("https");
-var axios = require("axios");
-
-// handle ssl
-const agent = new http.Agent({
-  rejectUnauthorized: false,
-});
 
 exports.logExecuteData = [];
 
@@ -129,8 +123,14 @@ exports.execute = function (req, res) {
       console.log("dataExtensionName: " + dataExtensionName);
 
       /* Webhook API Call */
-      var data = JSON.stringify(contentJSON);
+      var axios = require("axios");
 
+      // handle ssl
+      const agent = new http.Agent({
+        rejectUnauthorized: false,
+      });
+      
+      var data = JSON.stringify(contentJSON);
       var config = {
         method: "post",
         url: `${domain}/${webhookURL}`,
@@ -141,12 +141,14 @@ exports.execute = function (req, res) {
         data: data,
       };
 
+      console.log(config.url);
+
       axios(config)
         .then(function (response) {
-          console.log(JSON.stringify(response.data));
+          console.info(JSON.stringify(response.data));
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
         });
 
       logData(req);
