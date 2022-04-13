@@ -24,10 +24,22 @@ if (file && file.arguments && file.arguments.execute){
 }
     
 
+if (file && file.configurationArguments && file.configurationArguments.save){
+  console.info(`Replace configurationArguments.save.url in config.json with=${process.env.APP_URL}`); 
+  file.configurationArguments.save.url = process.env.APP_URL;
+}    
 if (file && file.configurationArguments && file.configurationArguments.publish){
   console.info(`Replace configurationArguments.publish.url in config.json with=${process.env.APP_URL}`); 
   file.configurationArguments.publish.url = process.env.APP_URL;
-}    
+}
+if (file && file.configurationArguments && file.configurationArguments.stop){
+  console.info(`Replace configurationArguments.stop.url in config.json with=${process.env.APP_URL}`); 
+  file.configurationArguments.stop.url = process.env.APP_URL;
+}
+if (file && file.configurationArguments && file.configurationArguments.validate){
+  console.info(`Replace configurationArguments.validate.url in config.json with=${process.env.APP_URL}`); 
+  file.configurationArguments.validate.url = process.env.APP_URL;
+}
 
 fs.writeFile(fileName, JSON.stringify(file, null, 2), function writeJSON(err) {
     if (err)
