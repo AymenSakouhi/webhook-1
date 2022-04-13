@@ -6,6 +6,12 @@ const Path = require("path");
 const JWT = require(Path.join(__dirname, "..", "lib", "jwtDecoder.js"));
 var util = require("util");
 var http = require("https");
+var axios = require("axios");
+
+// handle ssl
+const agent = new http.Agent({
+  rejectUnauthorized: false,
+});
 
 exports.logExecuteData = [];
 
@@ -29,32 +35,12 @@ function logData(req) {
     secure: req.secure,
     originalUrl: req.originalUrl,
   });
-  // console.log("body: " + util.inspect(req.body));
-  // console.log("headers: " + req.headers);
-  // console.log("trailers: " + req.trailers);
-  // console.log("method: " + req.method);
-  // console.log("url: " + req.url);
-  // console.log("params: " + util.inspect(req.params));
-  // console.log("query: " + util.inspect(req.query));
-  // console.log("route: " + req.route);
-  // console.log("cookies: " + req.cookies);
-  // console.log("ip: " + req.ip);
-  // console.log("path: " + req.path);
-  // console.log("host: " + req.host);
-  // console.log("fresh: " + req.fresh);
-  // console.log("stale: " + req.stale);
-  // console.log("protocol: " + req.protocol);
-  // console.log("secure: " + req.secure);
-  // console.log("originalUrl: " + req.originalUrl);
 }
 
 /*
  * POST Handler for / route of Activity (this is the edit route).
  */
 exports.edit = function (req, res) {
-  // Data from the req and put it in an array accessible to the main app.
-  //console.log( req.body );
-  //logData(req);
   res.send(200, "Edit");
 };
 
@@ -62,10 +48,6 @@ exports.edit = function (req, res) {
  * POST Handler for /save/ route of Activity.
  */
 exports.save = function (req, res) {
-  // Data from the req and put it in an array accessible to the main app.
-  //console.log( req.body );
-  //console.log( 'TEST SAVE' );
-
   logData(req);
   res.send(200, "Save");
 };
@@ -78,29 +60,24 @@ exports.execute = function (req, res) {
 
   // example on how to decode JWT
   JWT(req.body, process.env.jwtSecret, (err, decoded) => {
-    // verification error -> unauthorized request
     if (err) {
       console.error(err);
       return res.status(401).end();
     }
 
     if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-      // decoded in arguments
-      var decodedArgs = decoded.inArguments[0];
-      //console.log('decoded in arguments: ', decoded.inArguments.length);
+      console.log("decoded in arguments: ", decoded.inArguments.length);
 
       for (var i = 0; i < decoded.inArguments.length; i++) {
-        //console.log('arg ', i , ':', decoded.inArguments[i]);
+        console.log("arg ", i, ":", decoded.inArguments[i]);
       }
-
-      // console.log('inArguments: ', decoded.inArguments);
-      // console.log('inURL: ', decoded.inArguments[1].url);
-      // console.log('inPayload: ', decoded.inArguments[2].contentJSON);
 
       var webhookURL = decoded.inArguments[1].url;
       var contentJSON = decoded.inArguments[2].contentJSON;
       var email = decoded.inArguments[3].emailAddress;
       contentJSON = contentJSON.replace(/@email/g, email);
+
+
       var firstName = decoded.inArguments[5].firstName;
       contentJSON = contentJSON.replace(/@firstName/g, firstName);
       var phone = decoded.inArguments[6].phone;
@@ -148,167 +125,29 @@ exports.execute = function (req, res) {
       var obwKey = decoded.inArguments[31].obwKey;
       contentJSON = contentJSON.replace(/@obwKey/g, obwKey);
 
-      console.log("outPayload: ", contentJSON);
+      var dataExtensionName = decoded.inArguments[28].edk;
+      console.log("dataExtensionName: " + dataExtensionName);
 
       /* Webhook API Call */
+      var data = JSON.stringify(contentJSON);
 
-      var edk = decoded.inArguments[28].edk;
+      var config = {
+        method: "post",
+        url: `${domain}/${webhookURL}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        httpsAgent: agent,
+        data: data,
+      };
 
-      console.log("edk: " + edk);
-
-      if (edk != undefined) {
-        var axios = require("axios");
-
-        // handle ssl
-        const agent = new http.Agent({
-          rejectUnauthorized: false,
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-
-        var data = JSON.stringify(contentJSON);
-
-        var config = {
-          method: "post",
-          url: `${domain}/${webhookURL}`,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          httpsAgent: agent,
-          data: data,
-        };
-
-        axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else {
-        var access_token;
-
-        const mcAuthHttps = require("https");
-
-        const authPayload =
-          '{"grant_type": "client_credentials","client_id": "mi45gxnths5ja705yl7oh80w","client_secret": "iRH2Qc0c921ZIr9v3EWVp4g3", "scope": "data_extensions_read data_extensions_write"}';
-        //console.log('auth payload: ', authPayload);
-        const mcAuthData = authPayload; //JSON.stringify(payload);
-
-        const mcAuthOptions = {
-          hostname: "mcbxz8t2pj0bs3wsw5v7sczpfd2m.auth.marketingcloudapis.com",
-          port: 443,
-          path: "/v2/token/",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-
-        const mcAuthReq = mcAuthHttps.request(mcAuthOptions, (respAuth) => {
-          console.log(`EXECUTE MC Auth Status: ${respAuth.statusCode}`);
-
-          respAuth.on("data", (d) => {
-            console.log(`Data chunk available: ${d}`);
-            const mcAuthJSONresp = JSON.parse(d);
-            console.log("Auth Response: ", d);
-            //console.log('access_token: ', mcAuthJSONresp.access_token);
-            access_token = mcAuthJSONresp.access_token;
-
-            const mcLogHttps = require("https");
-
-            let date_ob = new Date();
-            let date = ("0" + date_ob.getDate()).slice(-2);
-            let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-            let year = date_ob.getFullYear();
-            let hours = date_ob.getHours() + 2;
-            let minutes = date_ob.getMinutes();
-            let seconds = date_ob.getSeconds();
-
-            let fullDate =
-              year +
-              "-" +
-              month +
-              "-" +
-              date +
-              " " +
-              hours +
-              ":" +
-              minutes +
-              ":" +
-              seconds;
-            var zapData = contentJSON;
-
-            var zapJSON = JSON.parse(zapData); //zapData.replace(/'/g, '"');
-
-            var logPayload = [
-              {
-                keys: {
-                  contactId: contactId,
-                  date: fullDate,
-                },
-                values: {
-                  status: "400",
-                  payload: zapData,
-                  response: "undefined Entry",
-                  url: domain + webhookURL,
-                  gender: salutation,
-                  firstName: firstName,
-                  email: email,
-                  phone: phone,
-                  country: country,
-                  "opt-in": optIn,
-                  message: zapJSON.message,
-                  programFamily: programFamily,
-                  journeyName: journeyName,
-                },
-              },
-            ];
-
-            console.log("LOG PAYLOAD: ", logPayload);
-            const mcLogData = JSON.stringify(logPayload);
-
-            const mcLogOptions = {
-              hostname:
-                "mcbxz8t2pj0bs3wsw5v7sczpfd2m.rest.marketingcloudapis.com",
-              port: 443,
-              path: "/hub/v1/dataevents/key:whLog/rowset",
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "",
-              },
-            };
-
-            //console.log('access_token LOG CALL: ', access_token);
-            mcLogOptions["headers"]["Authorization"] = "Bearer " + access_token;
-            //console.log('log options: ', mcLogOptions);
-
-            const mcLogReq = mcLogHttps.request(mcLogOptions, (respLog) => {
-              console.log(`EXECUTE MC LOG Status: ${respLog.statusCode}`);
-
-              respLog.on("data", (d) => {
-                //console.log(`Data chunk available: ${d}`)
-                const mcLogJSONresp = JSON.parse(d);
-                console.log("Log Response: ", respLog.statusCode);
-                console.log("Log Message: ", respLog.content);
-              });
-            });
-
-            mcLogReq.on("error", (error) => {
-              console.error(error);
-            });
-
-            mcLogReq.write(mcLogData.toString());
-            mcLogReq.end();
-          });
-        });
-
-        mcAuthReq.on("error", (error) => {
-          console.error(error);
-        });
-
-        mcAuthReq.write(mcAuthData);
-        mcAuthReq.end();
-      }
 
       logData(req);
       res.send(200, "Execute");
@@ -323,8 +162,6 @@ exports.execute = function (req, res) {
  * POST Handler for /publish/ route of Activity.
  */
 exports.publish = function (req, res) {
-  // Data from the req and put it in an array accessible to the main app.
-  //console.log( req.body );
   logData(req);
   res.send(200, "Publish");
 };
@@ -333,54 +170,8 @@ exports.publish = function (req, res) {
  * POST Handler for /validate/ route of Activity.
  */
 exports.validate = function (req, res) {
-  // Data from the req and put it in an array accessible to the main app.
-  //console.log( JSON.stringify(req.body) );
   console.log("VALIDATE");
-  // JWT(req.body, process.env.jwtSecret, (err, decoded) => {
-
-  //   console.log( 'VALIDATE 2' );
-  //     // verification error -> unauthorized request
-  //     if (err) {
-  //         console.error(err);
-  //         return res.status(401).end();
-  //     }
-  //     console.log( 'DECODED ' + JSON.stringify(decoded ));
-  //     console.log('decoded in arguments: ', decoded.inArguments.length);
-
-  //         for(var i = 0; i < decoded.inArguments.length;i++){
-  //             console.log('arg ', i , ':', decoded.inArguments[i]);
-  //         }
-
-  //     if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-
-  //         // decoded in arguments
-  //         var decodedArgs = decoded.inArguments[0];
-  //         //console.log('decoded in arguments: ', decoded.inArguments.length);
-
-  //         for(var i = 0; i < decoded.inArguments.length;i++){
-  //             console.log('val arg ', i , ':', decoded.inArguments[i]);
-  //         }
-
-  //         // console.log('inArguments: ', decoded.inArguments);
-  //         // console.log('inURL: ', decoded.inArguments[1].url);
-  //         // console.log('inPayload: ', decoded.inArguments[2].contentJSON);
-
-  //         var edk = decoded.inArguments[28].edk;
-
-  //         console.log( 'VALIDATION EDK' + edk);
-
-  //         if (edk !== "undefined") {
-
-  //         } else {
-  //           console.error('no entry event defined');
-  //           return res.status(400).end('No Entry Event');
-  //         }
-
-  //     } else {
-  //         console.error('inArguments invalid.');
-  //         return res.status(400).end();
-  //     }
-  // });
-
+  //todo
+  //validate that all payload parameters are part of the inArguments
   res.send(200, "Validate");
 };
