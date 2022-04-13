@@ -13,38 +13,38 @@ var activity    = require('./routes/activity');
 console.log( 'Call app.js' );
 
 //updating config.json to use environment variables during run time
-const fs = require('fs');
-const fileName = './public/config.json';
-const file = require(fileName);
+// const fs = require('fs');
+// const fileName = './public/config.json';
+// const file = require(fileName);
 
-if (file && file.arguments && file.arguments.execute){
-  console.info(`Set arguments.execute.url in config.json to=${process.env.APP_URL}/journeybuilder/execute`); 
-  file.arguments.execute.url = `${process.env.APP_URL}/journeybuilder/save`;
-}
+// if (file && file.arguments && file.arguments.execute){
+//   console.info(`Set arguments.execute.url in config.json to=${process.env.APP_URL}/journeybuilder/execute`); 
+//   file.arguments.execute.url = `${process.env.APP_URL}/journeybuilder/save`;
+// }
     
 
-if (file && file.configurationArguments && file.configurationArguments.save){
-  console.info(`Set configurationArguments.save.url=${file.configurationArguments.save.url} in config.json to=${process.env.APP_URL}/journeybuilder/save`); 
-  file.configurationArguments.save.url = `${process.env.APP_URL}/journeybuilder/save`;
-}    
-if (file && file.configurationArguments && file.configurationArguments.publish){
-  console.info(`Set configurationArguments.publish.url=${file.configurationArguments.publish.url} in config.json to=${process.env.APP_URL}/journeybuilder/publish`); 
-  file.configurationArguments.publish.url = `${process.env.APP_URL}/journeybuilder/save`;
-}
-if (file && file.configurationArguments && file.configurationArguments.stop){
-  console.info(`Set configurationArguments.stop.url=${file.configurationArguments.stop.url} in config.json to=${process.env.APP_URL}/journeybuilder/stop`); 
-  file.configurationArguments.stop.url = `${process.env.APP_URL}/journeybuilder/save`;
-}
-if (file && file.configurationArguments && file.configurationArguments.validate){
-  console.info(`Set configurationArguments.validate.url=${file.configurationArguments.validate.url} in config.json to=${process.env.APP_URL}/journeybuilder/validate`); 
-  file.configurationArguments.validate.url = `${process.env.APP_URL}/journeybuilder/save`;
-}
+// if (file && file.configurationArguments && file.configurationArguments.save){
+//   console.info(`Set configurationArguments.save.url=${file.configurationArguments.save.url} in config.json to=${process.env.APP_URL}/journeybuilder/save`); 
+//   file.configurationArguments.save.url = `${process.env.APP_URL}/journeybuilder/save`;
+// }    
+// if (file && file.configurationArguments && file.configurationArguments.publish){
+//   console.info(`Set configurationArguments.publish.url=${file.configurationArguments.publish.url} in config.json to=${process.env.APP_URL}/journeybuilder/publish`); 
+//   file.configurationArguments.publish.url = `${process.env.APP_URL}/journeybuilder/save`;
+// }
+// if (file && file.configurationArguments && file.configurationArguments.stop){
+//   console.info(`Set configurationArguments.stop.url=${file.configurationArguments.stop.url} in config.json to=${process.env.APP_URL}/journeybuilder/stop`); 
+//   file.configurationArguments.stop.url = `${process.env.APP_URL}/journeybuilder/save`;
+// }
+// if (file && file.configurationArguments && file.configurationArguments.validate){
+//   console.info(`Set configurationArguments.validate.url=${file.configurationArguments.validate.url} in config.json to=${process.env.APP_URL}/journeybuilder/validate`); 
+//   file.configurationArguments.validate.url = `${process.env.APP_URL}/journeybuilder/save`;
+// }
 
-fs.writeFile(fileName, JSON.stringify(file, null, 2), function writeJSON(err) {
-    if (err)
-        return console.log(err);
-    console.log('updated config.json');
-});
+// fs.writeFile(fileName, JSON.stringify(file, null, 2), function writeJSON(err) {
+//     if (err)
+//         return console.log(err);
+//     console.log('updated config.json');
+// });
 
 
 var app = express();

@@ -43,7 +43,7 @@ This guide covers Heroku, skip this step if you are familiar on how to deploy a 
 1. Log back into Heroku and navigate to your app
 2. Click on "Settings"
 3. Click on "Reveal config vars"
-4. Add a new var called jwtSecret and paste the App Signature you got from step 3 when configuring your package in Marketing Cloud
+4. Add a new var called JTW and paste the App Signature you got from step 3 when configuring your package in Marketing Cloud
 
 #### Step 5. Testing your Activity
 

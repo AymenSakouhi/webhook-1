@@ -53,7 +53,7 @@ exports.execute = function (req, res) {
   console.log("EXECUTE");
 
   // example on how to decode JWT
-  JWT(req.body, process.env.jwtSecret, (err, decoded) => {
+  JWT(req.body, process.env.JTW, (err, decoded) => {
     if (err) {
       console.error(err);
       return res.status(401).end();
