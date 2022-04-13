@@ -174,9 +174,7 @@ define(["postmonger"], function (Postmonger) {
 
     if (entryTitle == "Data Extension") {
       entryObject = "DE";
-    }
-
-    console.log(InteractionDefaults.Email);
+    }   
 
     switch (selectEntryObject) {
       case "Opportunity":
