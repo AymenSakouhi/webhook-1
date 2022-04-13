@@ -1,7 +1,7 @@
 {
-  "name": "jb-activity-template",
+  "name": "jb-webhook-activity",
   "version": "1.0.0",
-  "description": "Journey Builder Activity Template",
+  "description": "Journey Builder Webhook Activity",
   "engines": {
     "node": "6.11.1"
   },
