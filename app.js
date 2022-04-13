@@ -11,6 +11,25 @@ var routes      = require('./routes');
 var activity    = require('./routes/activity');
 
 console.log( 'Call app.js' );
+
+//updating config.json to use environment variables during run time
+const fs = require('fs');
+const fileName = './public/config.json';
+const file = require(fileName);
+if (file && file.arguments && file.arguments.execute)
+    file.arguments.execute.url = process.env.APP_URL || "";
+
+if (file && file.configurationArguments && file.configurationArguments.publish)
+    file.configurationArguments.publish.url = process.env.APP_URL || "";
+
+fs.writeFile(fileName, JSON.stringify(file, null, 2), function writeJSON(err) {
+    if (err)
+        return console.log(err);
+    console.log('updated config.json');
+});
+
+
+
 var app = express();
 
 // Configure Express
