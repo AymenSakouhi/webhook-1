@@ -17,27 +17,26 @@ const fs = require('fs');
 const fileName = './public/config.json';
 const file = require(fileName);
 
-console.info(`Replace placeholder url in config.json with=${process.env.APP_URL}`); 
 if (file && file.arguments && file.arguments.execute){
-  console.info(`Replace arguments.execute.url in config.json with=${process.env.APP_URL}`); 
+  console.info(`Set arguments.execute.url in config.json to=${process.env.APP_URL}`); 
   file.arguments.execute.url = process.env.APP_URL;
 }
     
 
 if (file && file.configurationArguments && file.configurationArguments.save){
-  console.info(`Replace configurationArguments.save.url in config.json with=${process.env.APP_URL}`); 
+  console.info(`Set configurationArguments.save.url=${file.configurationArguments.save.url} in config.json to=${process.env.APP_URL}`); 
   file.configurationArguments.save.url = process.env.APP_URL;
 }    
 if (file && file.configurationArguments && file.configurationArguments.publish){
-  console.info(`Replace configurationArguments.publish.url in config.json with=${process.env.APP_URL}`); 
+  console.info(`Set configurationArguments.publish.url=${file.configurationArguments.publish.url} in config.json to=${process.env.APP_URL}`); 
   file.configurationArguments.publish.url = process.env.APP_URL;
 }
 if (file && file.configurationArguments && file.configurationArguments.stop){
-  console.info(`Replace configurationArguments.stop.url in config.json with=${process.env.APP_URL}`); 
+  console.info(`Set configurationArguments.stop.url=${file.configurationArguments.stop.url} in config.json to=${process.env.APP_URL}`); 
   file.configurationArguments.stop.url = process.env.APP_URL;
 }
 if (file && file.configurationArguments && file.configurationArguments.validate){
-  console.info(`Replace configurationArguments.validate.url in config.json with=${process.env.APP_URL}`); 
+  console.info(`Set configurationArguments.validate.url=${file.configurationArguments.validate.url} in config.json to=${process.env.APP_URL}`); 
   file.configurationArguments.validate.url = process.env.APP_URL;
 }
 
