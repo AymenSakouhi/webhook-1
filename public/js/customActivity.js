@@ -136,7 +136,7 @@ define(["postmonger"], function (Postmonger) {
   }
 
   function save() {
-    var name = "Webhook 2.0";
+    var name = "Webhook 1.0";
     var url = getURL();
     var contentJSON = getcontentJSON();
     var domain = getDomain();
